@@ -28,6 +28,9 @@ public class Main {
 
     private static void thirdMain(String[] args) {
         String[] statements = {
+                "add 1.0",
+                "add xx 25.0",
+                "addX 0.0 0.0",
                 "add 25.0 92.0",        // 25.0 + 92.0 = 117.0
                 "power 5.0 2.0",        // 5.0 ^ 2.0 = 25.0
                 "divide 100.0 50.0",    // 100.0 / 50.0 = 2.0
@@ -45,8 +48,17 @@ public class Main {
         });
 
         for(String statement:statements){
-            String output = helper.process(statement);
-            System.out.println(output);
+            try {
+                String output = helper.process(statement);
+                System.out.println(output);
+            } catch (InvalidStatementException e){
+                System.out.println("ERROR");
+                System.out.println(e.getMessage());
+                if(e.getCause() != null){
+                    System.out.println("\tOriginal exception: " + e.getCause().getMessage());
+                }
+                System.out.println();
+            }
         }
     }
 

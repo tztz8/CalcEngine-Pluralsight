@@ -1,10 +1,13 @@
 package tech.tftinker.pluralsight.CalcApp;
 
 import tech.tftinker.pluralsight.CalcEngine.CalculateHelper;
+import tech.tftinker.pluralsight.CalcEngine.DynamicHelper;
 import tech.tftinker.pluralsight.CalcEngine.InvalidStatementException;
 import tech.tftinker.pluralsight.CalcEngine.MathEquation;
 import tech.tftinker.pluralsight.CalcEngine.CalculateBase;
 import tech.tftinker.pluralsight.CalcEngine.Adder;
+import tech.tftinker.pluralsight.CalcEngine.MathProcessing;
+import tech.tftinker.pluralsight.CalcEngine.PowerOf;
 import tech.tftinker.pluralsight.CalcEngine.Subtracter;
 import tech.tftinker.pluralsight.CalcEngine.Multiplier;
 import tech.tftinker.pluralsight.CalcEngine.Divider;
@@ -17,6 +20,34 @@ public class Main {
         System.out.println("Using Calculater Helper - enum");
         System.out.println();
         newMain(args);
+        System.out.println();
+        System.out.println("Using Calculater Helper - Interfaces");
+        System.out.println();
+        thirdMain(args);
+    }
+
+    private static void thirdMain(String[] args) {
+        String[] statements = {
+                "add 25.0 92.0",        // 25.0 + 92.0 = 117.0
+                "power 5.0 2.0",        // 5.0 ^ 2.0 = 25.0
+                "divide 100.0 50.0",    // 100.0 / 50.0 = 2.0
+                "add 25.0 92.0",        // 25.0 + 92.0 = 117.0
+                "subtract 225.0 17.0",  // 225.0 - 17.0 = 108.0
+                "multiply 11.0 3.0"     // 11.0 * 3.0 = 33.0
+        };
+
+        DynamicHelper helper = new DynamicHelper(new MathProcessing[] {
+                new Adder(),
+                new Subtracter(),
+                new Multiplier(),
+                new Divider(),
+                new PowerOf()
+        });
+
+        for(String statement:statements){
+            String output = helper.process(statement);
+            System.out.println(output);
+        }
     }
 
     private static void newMain(String[] args) {

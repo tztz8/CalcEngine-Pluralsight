@@ -16,4 +16,9 @@ public class PowerOf implements MathProcessing {
     public double doCalculation(double leftVal, double rightVal) {
         return Math.pow(leftVal, rightVal);
     }
+
+    @Override
+    public char getOpCode() {
+        return 'p';
+    }
 }

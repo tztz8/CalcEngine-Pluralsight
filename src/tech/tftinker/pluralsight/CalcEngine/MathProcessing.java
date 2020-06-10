@@ -4,5 +4,6 @@ public interface MathProcessing {
     String SEPARATOR = " ";
     String getKeyword();
     char getSymbol();
-    double doCalculation(double leftVal, double rightVal);
+    double doCalculation(double leftVal, double rightVal) throws InvalidValException;
+    char getOpCode();
 }

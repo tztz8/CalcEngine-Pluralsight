@@ -7,7 +7,10 @@ public class Divider extends CalculateBase implements MathProcessing{
     }
 
     @Override
-    public double calculate(){
+    public double calculate() throws InvalidValException{
+        if (getRightVal() == 0) {
+            throw new InvalidValException("Can not divide by 0", getLeftVal(), getRightVal());
+        }
         double value = getLeftVal() / getRightVal();
         setResult(value);
         return getResult();
@@ -24,10 +27,15 @@ public class Divider extends CalculateBase implements MathProcessing{
     }
 
     @Override
-    public double doCalculation(double leftVal, double rightVal) {
+    public double doCalculation(double leftVal, double rightVal) throws InvalidValException {
         setLeftVal(leftVal);
         setRightVal(rightVal);
         calculate();
         return getResult();
+    }
+
+    @Override
+    public char getOpCode() {
+        return 'd';
     }
 }

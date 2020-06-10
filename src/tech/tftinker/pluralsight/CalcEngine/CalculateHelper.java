@@ -48,7 +48,11 @@ public class CalculateHelper {
                 break;
         }
 
-        calculator.calculate();
+        try {
+            calculator.calculate();
+        } catch (InvalidValException e){
+            throw new InvalidStatementException("Can not do calculation", statement, e);
+        }
         result = calculator.getResult();
     }
 

@@ -30,4 +30,9 @@ public class Multiplier extends CalculateBase implements MathProcessing{
         calculate();
         return getResult();
     }
+
+    @Override
+    public char getOpCode() {
+        return 'm';
+    }
 }

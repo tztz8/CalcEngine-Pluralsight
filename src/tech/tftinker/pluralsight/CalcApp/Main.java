@@ -3,6 +3,7 @@ package tech.tftinker.pluralsight.CalcApp;
 import tech.tftinker.pluralsight.CalcEngine.CalculateHelper;
 import tech.tftinker.pluralsight.CalcEngine.DynamicHelper;
 import tech.tftinker.pluralsight.CalcEngine.InvalidStatementException;
+import tech.tftinker.pluralsight.CalcEngine.InvalidValException;
 import tech.tftinker.pluralsight.CalcEngine.MathEquation;
 import tech.tftinker.pluralsight.CalcEngine.CalculateBase;
 import tech.tftinker.pluralsight.CalcEngine.Adder;
@@ -24,6 +25,38 @@ public class Main {
         System.out.println("Using Calculater Helper - Interfaces");
         System.out.println();
         thirdMain(args);
+        System.out.println();
+        System.out.println("Cheking for input (opCode, leftVal, rightVal)");
+        System.out.println();
+        if (args.length == 0){
+            System.out.println("no input given");
+        }else if (args.length == 3){
+            inputMain(args);
+        }else{
+            System.out.println("incorrect input; was given " + args.length + " arguments; as shown above input should have 3 arguments");
+        }
+    }
+
+    private static void inputMain(String[] args){
+        DynamicHelper helper = new DynamicHelper(new MathProcessing[] {
+                new Adder(),
+                new Subtracter(),
+                new Multiplier(),
+                new Divider(),
+                new PowerOf()
+        });
+
+        try {
+            String output = helper.process(args[0].charAt(0), Double.parseDouble(args[1]), Double.parseDouble(args[2]));
+            System.out.println(output);
+        } catch (InvalidStatementException e){
+            System.out.println("ERROR");
+            System.out.println(e.getMessage());
+            if(e.getCause() != null){
+                System.out.println("\tOriginal exception: " + e.getCause().getMessage());
+            }
+            System.out.println();
+        }
     }
 
     private static void thirdMain(String[] args) {
@@ -31,6 +64,7 @@ public class Main {
                 "add 1.0",
                 "add xx 25.0",
                 "addX 0.0 0.0",
+                "divide 25.0 0.0",
                 "add 25.0 92.0",        // 25.0 + 92.0 = 117.0
                 "power 5.0 2.0",        // 5.0 ^ 2.0 = 25.0
                 "divide 100.0 50.0",    // 100.0 / 50.0 = 2.0
@@ -67,6 +101,7 @@ public class Main {
                 "add 1.0",
                 "add xx 25.0",
                 "addX 0.0 0.0",
+                "divide 25.0 0",
                 "divide 100.0 50.0",    // 100.0 / 50.0 = 2.0
                 "add 25.0 92.0",        // 25.0 + 92.0 = 117.0
                 "subtract 225.0 17.0",  // 225.0 - 17.0 = 108.0
@@ -137,7 +172,11 @@ public class Main {
         };
 
         for(CalculateBase calculator:calculators){
-            calculator.calculate();
+            try {
+                calculator.calculate();
+            } catch (InvalidValException e) {
+                e.printStackTrace();
+            }
             System.out.print("result = ");
             System.out.println(calculator.getResult());
         }

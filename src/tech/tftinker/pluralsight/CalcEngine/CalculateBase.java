@@ -32,5 +32,5 @@ public abstract class CalculateBase {
         this.rightVal = rightVal;
     }
 
-    public abstract double calculate();
+    public abstract double calculate() throws InvalidValException;
 }

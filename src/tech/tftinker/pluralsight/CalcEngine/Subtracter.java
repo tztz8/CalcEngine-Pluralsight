@@ -30,4 +30,9 @@ public class Subtracter extends CalculateBase implements MathProcessing{
         calculate();
         return getResult();
     }
+
+    @Override
+    public char getOpCode() {
+        return 's';
+    }
 }
